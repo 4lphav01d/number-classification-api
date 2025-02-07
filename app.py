@@ -1,4 +1,3 @@
-
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import number_service
@@ -8,6 +7,7 @@ import math
 app = Flask(__name__)
 CORS(app)
 
+# Middleware to set Content-Type header to application/json
 @app.after_request
 def add_json_header(response):
     if response.content_type == 'application/json':
@@ -18,7 +18,7 @@ def add_json_header(response):
 def classify_number():
     number_str = request.args.get('number', '').strip()
 
-    # Validate input
+    # Validate input and return JSON response with error message if invalid
     if not number_str:
         return jsonify({"error": "Number is required"}), 400
 
@@ -33,7 +33,7 @@ def classify_number():
             "number": number_str
         }), 400
 
-    # Calculate properties
+    # Calculate properties and return JSON response
     try:
         properties = number_service.get_properties(number)
         digit_sum = number_service.get_digit_sum(number)
@@ -55,6 +55,7 @@ def classify_number():
             "number": number_str
         }), 500
 
+# Error handler for 404 errors, returns JSON response
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
@@ -62,6 +63,7 @@ def not_found(error):
         "message": "The requested URL was not found on the server"
     }), 404
 
+# Error handler for 500 errors, returns JSON response
 @app.errorhandler(500)
 def internal_error(error):
     return jsonify({
