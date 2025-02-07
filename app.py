@@ -1,3 +1,4 @@
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import number_service
@@ -9,18 +10,18 @@ CORS(app)
 
 @app.after_request
 def add_json_header(response):
-    if response.status_code != 204:
+    if response.content_type == 'application/json':
         response.headers['Content-Type'] = 'application/json'
     return response
 
 @app.route('/api/classify-number', methods=['GET'])
 def classify_number():
     number_str = request.args.get('number', '').strip()
-    
+
     # Validate input
     if not number_str:
-        return jsonify({"number": "undefined", "error": True}), 400
-    
+        return jsonify({"error": "Number is required"}), 400
+
     try:
         num = float(number_str)
         if not num.is_integer() or math.isinf(num):
@@ -28,8 +29,8 @@ def classify_number():
         number = int(num)
     except (ValueError, OverflowError):
         return jsonify({
-            "number": number_str,
-            "error": True
+            "error": "Invalid number format",
+            "number": number_str
         }), 400
 
     # Calculate properties
@@ -37,7 +38,7 @@ def classify_number():
         properties = number_service.get_properties(number)
         digit_sum = number_service.get_digit_sum(number)
         fun_fact = http_client.get_fun_fact(abs(number))  # Use absolute value for fact lookup
-        
+
         return jsonify({
             "number": number,
             "is_prime": number_service.is_prime(abs(number)),
@@ -46,12 +47,12 @@ def classify_number():
             "digit_sum": digit_sum,
             "fun_fact": fun_fact
         })
-    
+
     except Exception as e:
         app.logger.error(f"Error processing request: {str(e)}")
         return jsonify({
-            "number": number_str,
-            "error": True
+            "error": "Internal server error",
+            "number": number_str
         }), 500
 
 @app.errorhandler(404)

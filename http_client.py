@@ -1,3 +1,4 @@
+
 import requests
 
 def get_fun_fact(number):
