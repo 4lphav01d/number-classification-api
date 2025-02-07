@@ -7,7 +7,7 @@ def is_prime(n):
         return True
     if n % 2 == 0:
         return False
-    sqrt_n = math.isqrt(n)
+    sqrt_n = math.isqrt(abs(n))
     for i in range(3, sqrt_n + 1, 2):
         if n % i == 0:
             return False
