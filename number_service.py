@@ -39,11 +39,14 @@ def get_parity(n):
 
 def get_properties(n):
     properties = []
-    if is_armstrong(n):
+    n_abs = abs(n)
+    
+    if is_armstrong(n_abs):
         properties.append("armstrong")
-    if is_prime(n):
+    if is_prime(n_abs):
         properties.append("prime")
-    if is_perfect(n):
+    if is_perfect(n_abs):
         properties.append("perfect")
     properties.append(get_parity(n))
+    
     return properties
