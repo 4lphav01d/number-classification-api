@@ -134,25 +134,7 @@ Here’s a quick outline:
    ```bash
    gunicorn --bind 0.0.0.0:8000 app:app
    ```
-3. **Configure Nginx:** Create a server block in `/etc/nginx/sites-available/your_app` to proxy requests to Gunicorn. For example:
-   ```nginx
-   server {
-       listen 80;
-       server_name your_domain_or_IP;
 
-       location / {
-           proxy_pass http://127.0.0.1:8000;
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           proxy_set_header X-Forwarded-Proto $scheme;
-       }
-   }
-   ```
-   Enable the configuration and restart Nginx.
-4. **(Optional) Configure systemd:** Create a systemd service file to manage your Gunicorn process.
-
-For a detailed guide, refer to Flask’s [Deploying to Production](https://flask.palletsprojects.com/en/latest/deploying/) documentation or tutorials from your VPS provider.
 
 ## Contributing
 
