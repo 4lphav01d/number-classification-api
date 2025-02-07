@@ -10,14 +10,18 @@ CORS(app)
 @app.route('/api/classify-number', methods=['GET'])
 def classify_number():
     number_str = request.args.get('number')
-    
-    if not number_str or not number_str.lstrip('-').isdigit():
-        return jsonify({
-            "number": number_str if number_str else "undefined",
-            "error": True
-        }), 400
-    
-    number = int(number_str)
+
+    if not number_str:
+        return jsonify({"number": "undefined", "error": True}), 400
+
+    try:
+        # Allow integers and floats that are effectively integers (e.g., 123.0)
+        number = float(number_str)
+        if not number.is_integer():
+            return jsonify({"number": number_str, "error": True}), 400
+        number = int(number)
+    except ValueError:
+        return jsonify({"number": number_str, "error": True}), 400
     
     properties = number_service.get_properties(number)
     digit_sum = number_service.get_digit_sum(number)
