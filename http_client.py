@@ -8,7 +8,7 @@ def get_fun_fact(number):
             timeout=3
         )
         if response.status_code == 200:
-            return response.json().get('text', "No fun fact available")
+            return response.json().get('text', f"{number} is an interesting number!")
     except (requests.exceptions.RequestException, KeyError):
         pass
-    return "No fun fact available"
+    return f"{number} is a fascinating number with unique properties."

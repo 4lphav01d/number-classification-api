@@ -7,7 +7,7 @@ def is_prime(n):
         return True
     if n % 2 == 0:
         return False
-    sqrt_n = math.isqrt(abs(n))
+    sqrt_n = math.isqrt(n)
     for i in range(3, sqrt_n + 1, 2):
         if n % i == 0:
             return False
@@ -26,13 +26,15 @@ def is_perfect(n):
     return sum_divisors == n
 
 def is_armstrong(n):
+    if n < 0:
+        return False
     digits = str(n)
     length = len(digits)
     total = sum(int(digit)**length for digit in digits)
     return total == n
 
 def get_digit_sum(n):
-    return sum(int(digit) for digit in str(abs(n)))
+    return sum(int(d) for d in str(abs(n)))
 
 def get_parity(n):
     return "even" if n % 2 == 0 else "odd"
@@ -49,4 +51,4 @@ def get_properties(n):
         properties.append("perfect")
     properties.append(get_parity(n))
     
-    return properties
+    return sorted(properties)
