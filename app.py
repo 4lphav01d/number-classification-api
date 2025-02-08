@@ -30,7 +30,9 @@ def classify_number():
     except (ValueError, OverflowError):
         return jsonify({
             "error": "Invalid number format",
-            "number": number_str
+            #"number": number_str
+            "number": "alphabet"
+
         }), 400
 
     # Calculate properties and return JSON response
