@@ -8,7 +8,7 @@ def is_prime(n):
         return True
     if n % 2 == 0:
         return False
-    sqrt_n = math.isqrt(n)
+    sqrt_n = int(math.isqrt(n))
     for i in range(3, sqrt_n + 1, 2):
         if n % i == 0:
             return False
@@ -18,7 +18,7 @@ def is_perfect(n):
     if n <= 1:
         return False
     sum_divisors = 1
-    sqrt_n = math.isqrt(n)
+    sqrt_n = int(math.isqrt(n))
     for i in range(2, sqrt_n + 1):
         if n % i == 0:
             sum_divisors += i
