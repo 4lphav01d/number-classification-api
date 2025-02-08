@@ -53,7 +53,7 @@ def classify_number():
     except Exception as e:
         app.logger.error(f"Error processing request: {str(e)}")
         return jsonify({
-            "number": number_str
+            "number": number_str,
             "error": "Internal server error",
         }), 500
 
@@ -61,8 +61,10 @@ def classify_number():
 @app.errorhandler(404)
 def not_found(error):
     return jsonify({
-        "error": "Endpoint not found",
-        "message": "The requested URL was not found on the server"
+        # "error": "Endpoint not found",
+        # "message": "The requested URL was not found on the server"
+        "error": True,
+        "number": "alphabet"
     }), 404
 
 # Error handler for 500 errors, returns JSON response
