@@ -53,7 +53,7 @@ def classify_number():
     except Exception as e:
         app.logger.error(f"Error processing request: {str(e)}")
         return jsonify({
-            "number": number_str
+            "number": number_str,
             "error": "Internal server error",
         }), 500
 
